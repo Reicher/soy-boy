@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://d2oaltmp1jsma"]
+
+[ext_resource type="Script" path="res://soy_boy.gd" id="1_tunai"]
+[ext_resource type="Texture2D" uid="uid://c3lsyda1bdt6t" path="res://assets/images/soyboy.png" id="2_hgdso"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0eknt"]
+atlas = ExtResource("2_hgdso")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1oocc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0eknt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xvak4"]
+size = Vector2(42, 59)
+
+[node name="SoyBoy" type="CharacterBody2D"]
+position = Vector2(534, 459)
+script = ExtResource("1_tunai")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1oocc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_xvak4")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+limit_bottom = 648
+limit_smoothed = true
+
+[node name="WallJumpTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 50
+one_shot = true
+explosiveness = 0.94
+randomness = 1.0
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(20, 32)
+
+[connection signal="timeout" from="WallJumpTimer" to="." method="_on_wall_jump_timer_timeout"]
