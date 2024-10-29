@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://soy_boy.gd" id="1_tunai"]
 [ext_resource type="Texture2D" uid="uid://c3lsyda1bdt6t" path="res://assets/images/soyboy.png" id="2_hgdso"]
+[ext_resource type="Texture2D" uid="uid://dpwjgsiyvnjxv" path="res://assets/images/droplet.png" id="4_y7nlc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0eknt"]
 atlas = ExtResource("2_hgdso")
@@ -42,13 +43,17 @@ wait_time = 0.1
 one_shot = true
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(1, 25)
 emitting = false
-amount = 50
+amount = 10
 one_shot = true
 explosiveness = 0.94
 randomness = 1.0
 local_coords = true
-emission_shape = 3
-emission_rect_extents = Vector2(20, 32)
+texture = ExtResource("4_y7nlc")
+emission_shape = 2
+emission_sphere_radius = 26.4
+direction = Vector2(1, 1)
+spread = 24.09
 
 [connection signal="timeout" from="WallJumpTimer" to="." method="_on_wall_jump_timer_timeout"]
