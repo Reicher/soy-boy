@@ -82,13 +82,11 @@ func _emit_splatter():
 	# Calculate the emission direction based on Soyboy's velocity
 	var impact_velocity = velocity.normalized()
 	
-	splatter.direction = impact_velocity
+	# Splatter is shot to the opposite direction
+	splatter.direction = -impact_velocity
 	splatter.initial_velocity_min = velocity.length() * PARTICLE_SPEED_MULTIPLIER * 0.8
 	splatter.initial_velocity_max = velocity.length() * PARTICLE_SPEED_MULTIPLIER * 1.2
 		# Adjust PARTICLE_SPEED_MULTIPLIER as needed to scale particle speed
 		
-	# Set the global position of the particle system to Soyboy's position
-	splatter.global_position = global_position
-	
 	# Start emitting
 	splatter.emitting = true
