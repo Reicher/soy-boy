@@ -12,6 +12,7 @@ var jumpsMade = 0
 var doWallJump = false
 
 var previous_velocity = Vector2.ZERO  # To track velocity between frames
+var is_jumping = false 
 
 func _physics_process(delta):
 	var direction = Input.get_axis("ui_left", "ui_right")
@@ -47,19 +48,32 @@ func _physics_process(delta):
 	previous_velocity = velocity
 	
 func _setAnimation(direction):
-	if velocity.x > 0: animatedSprite.flip_h = false
-	elif velocity.x < 0: animatedSprite.flip_h = true
-	elif velocity.x == 0: 
-		if direction > 0: animatedSprite.flip_h = false
-		elif direction < 0: animatedSprite.flip_h = true	
-		
+	if velocity.x > 0:
+		animatedSprite.flip_h = false
+	elif velocity.x < 0:
+		animatedSprite.flip_h = true
+	elif velocity.x == 0:
+		if direction > 0:
+			animatedSprite.flip_h = false
+		elif direction < 0:
+			animatedSprite.flip_h = true
 	
-	if is_on_wall_only() && (velocity.x != 0 || direction != 0):
+	if is_on_wall_only() and (velocity.x != 0 or direction != 0):
 		animatedSprite.flip_h = !animatedSprite.flip_h
 
-	#if !is_on_floor(): animatedSprite.play("jump")
-	#elif direction != 0: animatedSprite.play("run")
-	#else: animatedSprite.play("idle")
+	if is_on_wall():
+		is_jumping = false  # Reset jumping flag when sliding on the wall
+		animatedSprite.play("wall slide")
+	elif !is_on_floor():
+		if !is_jumping:
+			is_jumping = true  # Set the jumping flag when starting a jump
+			animatedSprite.play("jump")  # Play the jump animation once
+	elif velocity.x != 0:
+		is_jumping = false  # Reset jumping flag when running on the ground
+		animatedSprite.play("run")
+	else:
+		is_jumping = false  # Reset jumping flag when idle on the ground
+		animatedSprite.play("idle")
 
 func _on_wall_jump_timer_timeout():
 	doWallJump = false
