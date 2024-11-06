@@ -169,7 +169,7 @@ limit_bottom = 648
 limit_smoothed = true
 
 [node name="WallJumpTimer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.06
 one_shot = true
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]

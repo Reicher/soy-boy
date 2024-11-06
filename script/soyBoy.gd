@@ -3,9 +3,9 @@ extends CharacterBody2D
 @onready var animatedSprite = $AnimatedSprite2D
 @onready var splatter = $CPUParticles2D
 
-const SPEED = 500.0
-const JUMP_VELOCITY = -350.0
-const WALL_SLIDING_SPEED = 1200
+const SPEED = 500.0 # top speed
+const JUMP_VELOCITY = -350.0 # The upward jumping speed
+const WALL_SLIDING_SPEED = 1200 # How fast we slide down
 const ACCELERATION = 900.0  # Controls how quickly we reach max speed
 const DECELERATION = 600.0  # Controls how quickly we stop
 
