@@ -3,8 +3,6 @@ extends Node2D
 var levels = []
 var current_level
 var currentLevelNum = 1
-var soyboy_scene = preload("res://scene/soyBoy.tscn")
-var soyboy
 
 func _ready() -> void:
 	load_levels()
@@ -29,23 +27,16 @@ func start_level(level_num: int) -> void:
 	# Clean up previous instances
 	if current_level:
 		current_level.queue_free()
-	if soyboy:
-		soyboy.queue_free()
 
 	# Load the new level
 	if level_num > levels.size():
 		print("No more levels!")
 		return
+		
 	current_level = levels[level_num - 1].instantiate()
 	current_level.win.connect(_on_level_win)
 	current_level.lost.connect(_on_level_lost)
 	add_child(current_level)
-
-	# Instantiate SoyBoy
-	soyboy = soyboy_scene.instantiate()
-	soyboy.position = Vector2(0, 0)  # Or use spawn point logic as shown above
-	soyboy.name = "SoyBoy"
-	current_level.add_child(soyboy)
 
 func _on_level_win() -> void:
 	print("Level won!")
